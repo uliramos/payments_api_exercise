@@ -2,13 +2,29 @@ package com.form3.exercise.cramos.model;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.form3.exercise.cramos.model.chargesinfo.ChargesInformation;
 import com.form3.exercise.cramos.model.party.Party;
 import com.form3.exercise.cramos.model.party.SponsorParty;
 
 public class PaymentAttributes {
-    // Using same unique key as the matching payment object. 1-to-1 relationship
+
+    @Id
+    @JsonIgnore
+    private UUID id;
+
+    @JoinColumn(name = "id")
+    @OneToOne
+    @MapsId
+    private Payment payment;
+
     private final String paymentId;
     private final Double amount;
     private final Party beneficiaryParty;
@@ -71,7 +87,15 @@ public class PaymentAttributes {
         this.sponsorParty = sponsorParty;
     }
 
-    // getters //
+    // getters and setters//
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public UUID getId() {
+        return id;
+    }
 
     public String getPaymentId() {
         return paymentId;
@@ -152,8 +176,8 @@ public class PaymentAttributes {
             return false;
         }
         PaymentAttributes that = (PaymentAttributes) o;
-        return Objects.equals(paymentId, that.paymentId) && Objects.equals(amount, that.amount) && Objects
-                .equals(beneficiaryParty, that.beneficiaryParty) && Objects
+        return Objects.equals(id, that.id) && Objects.equals(paymentId, that.paymentId) && Objects
+                .equals(amount, that.amount) && Objects.equals(beneficiaryParty, that.beneficiaryParty) && Objects
                 .equals(chargesInformation, that.chargesInformation) && Objects.equals(currency, that.currency)
                 && Objects.equals(debtorParty, that.debtorParty) && Objects
                 .equals(endToEndReference, that.endToEndReference) && Objects.equals(fx, that.fx) && Objects
@@ -166,20 +190,19 @@ public class PaymentAttributes {
 
     @Override
     public int hashCode() {
-        return Objects
-                .hash(paymentId, amount, beneficiaryParty, chargesInformation, currency, debtorParty, endToEndReference,
-                        fx, numericReference, paymentPurpose, paymentScheme, paymentType, processingDate, reference,
-                        schemePaymentSubType, schemePaymentType, sponsorParty);
+        return Objects.hash(id, paymentId, amount, beneficiaryParty, chargesInformation, currency, debtorParty,
+                endToEndReference, fx, numericReference, paymentPurpose, paymentScheme, paymentType, processingDate,
+                reference, schemePaymentSubType, schemePaymentType, sponsorParty);
     }
 
-    @Override
-    public String toString() {
-        return "PaymentAttributes{" + "paymentId='" + paymentId + '\'' + ", amount=" + amount + ", beneficiaryParty="
-                + beneficiaryParty + ", chargesInformation=" + chargesInformation + ", currency=" + currency
-                + ", debtorParty=" + debtorParty + ", endToEndReference='" + endToEndReference + '\'' + ", fx=" + fx
-                + ", numericReference='" + numericReference + '\'' + ", paymentPurpose='" + paymentPurpose + '\''
-                + ", paymentScheme=" + paymentScheme + ", paymentType=" + paymentType + ", processingDate="
-                + processingDate + ", reference='" + reference + '\'' + ", schemePaymentSubType=" + schemePaymentSubType
-                + ", schemePaymentType=" + schemePaymentType + ", sponsorParty=" + sponsorParty + '}';
+    @Override public String toString() {
+        return "PaymentAttributes{" + "id=" + id + ", paymentId='" + paymentId + '\'' + ", amount=" + amount
+                + ", beneficiaryParty=" + beneficiaryParty + ", chargesInformation=" + chargesInformation
+                + ", currency=" + currency + ", debtorParty=" + debtorParty + ", endToEndReference='"
+                + endToEndReference + '\'' + ", fx=" + fx + ", numericReference='" + numericReference + '\''
+                + ", paymentPurpose='" + paymentPurpose + '\'' + ", paymentScheme=" + paymentScheme + ", paymentType="
+                + paymentType + ", processingDate=" + processingDate + ", reference='" + reference + '\''
+                + ", schemePaymentSubType=" + schemePaymentSubType + ", schemePaymentType=" + schemePaymentType
+                + ", sponsorParty=" + sponsorParty + '}';
     }
 }

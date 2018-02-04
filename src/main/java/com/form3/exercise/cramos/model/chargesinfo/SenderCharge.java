@@ -2,10 +2,29 @@ package com.form3.exercise.cramos.model.chargesinfo;
 
 import java.util.Currency;
 import java.util.Objects;
+import java.util.UUID;
+
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SenderCharge {
+
+    @Id
+    @JsonIgnore
+    private UUID id;
+
     private final Double amount;
     private final Currency currency;
+
+    @JoinColumn(name = "id")
+    @ManyToOne
+    @MapsId
+    private ChargesInformation chargesInformation;
+
 
     /**
      * Create a new SenderCharge instance.
@@ -17,7 +36,11 @@ public class SenderCharge {
         this.currency = currency;
     }
 
-    // getters //
+    // getters and setters //
+
+    public void setChargesInformation(ChargesInformation chargesInformation) {
+        this.chargesInformation = chargesInformation;
+    }
 
     public Double getAmount() {
         return amount;

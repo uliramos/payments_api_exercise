@@ -1,8 +1,27 @@
 package com.form3.exercise.cramos.model.party;
 
 import java.util.Objects;
+import java.util.UUID;
+
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.form3.exercise.cramos.model.PaymentAttributes;
 
 public class SponsorParty {
+
+    @Id
+    @JsonIgnore
+    private UUID id;
+
+    @JoinColumn(name = "id")
+    @OneToOne
+    @MapsId
+    private PaymentAttributes paymentAttributes;
+
     private final String accountNumber;
     private final String bankId;
     private final BankIdCode bankIdCode;
@@ -19,7 +38,11 @@ public class SponsorParty {
         this.bankIdCode = bankIdCode;
     }
 
-    // getters //
+    // getters and setters//
+
+    public void setPaymentAttributes(PaymentAttributes paymentAttributes) {
+        this.paymentAttributes = paymentAttributes;
+    }
 
     public String getAccountNumber() {
         return accountNumber;
