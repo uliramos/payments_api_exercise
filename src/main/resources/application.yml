@@ -1,15 +1,7 @@
 spring:
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: validate
-#    properties:
-#      hibernate:
-#        #show_sql: true
-#        #dialect: net.postquantum.pqcore.user.dal.hibernate.postgresql.MyPostgreSQL9Dialect
-#        dialect: net.postquantum.pqcore.user.dal.hibernate.postgresql.MyPostgreSQL9Dialect
-#      org.hibernate.flushMode: COMMIT
-
+  server:
+    contextPath: /api
 
   h2:
     console.enabled=true

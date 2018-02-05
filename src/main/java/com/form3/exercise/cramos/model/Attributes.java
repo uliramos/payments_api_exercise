@@ -57,6 +57,9 @@ public class Attributes {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "attributes")
     private SponsorParty sponsorParty;
 
+    /**
+     * Default constructor
+     */
     public Attributes() {
     }
 

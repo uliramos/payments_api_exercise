@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.form3.exercise.cramos.dao.PaymentRepository;
-import com.form3.exercise.cramos.service.PaymentService;
+import com.form3.exercise.cramos.service.DefaultPaymentService;
 import com.form3.exercise.cramos.web.PaymentController;
 
 @RunWith(SpringRunner.class)
@@ -19,7 +19,7 @@ public class RestApiApplicationTests {
 	@Autowired
 	private PaymentController paymentController;
 	@Autowired
-	private PaymentService paymentService;
+	private DefaultPaymentService paymentService;
 	@Autowired
 	private PaymentRepository paymentRepository;
 

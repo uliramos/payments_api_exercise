@@ -31,6 +31,12 @@ public class Payment implements Transaction {
     private Attributes attributes;
 
     /**
+     * Default constructor
+     */
+    public Payment() {
+    }
+
+    /**
      * Create a payment instance.
      * @param version
      * @param organisationId
