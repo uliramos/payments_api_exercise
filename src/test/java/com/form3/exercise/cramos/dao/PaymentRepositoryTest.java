@@ -1,6 +1,6 @@
 package com.form3.exercise.cramos.dao;
 
-import static com.form3.exercise.cramos.dao.TestUtils.getPaymentAttributesForTest;
+import static com.form3.exercise.cramos.TestUtils.getPaymentAttributesForTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;

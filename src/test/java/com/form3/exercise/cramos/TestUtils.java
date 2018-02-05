@@ -1,4 +1,4 @@
-package com.form3.exercise.cramos.dao;
+package com.form3.exercise.cramos;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -28,8 +28,9 @@ import com.form3.exercise.cramos.model.party.SponsorParty;
  */
 public class TestUtils {
 
-    static Attributes getPaymentAttributesForTest(String paymentId, String beneficiaryAccNumber, String debtorAccNumber,
-            Double receiverChargesAmount, Double senderChargersAmount, String sponsorPartyAccountNumber) {
+    public static Attributes getPaymentAttributesForTest(String paymentId, String beneficiaryAccNumber,
+            String debtorAccNumber, Double receiverChargesAmount, Double senderChargersAmount,
+            String sponsorPartyAccountNumber) {
 
         Double amount = 100.21;
         Party beneficiaryParty = getBeneficiaryParty(beneficiaryAccNumber);
