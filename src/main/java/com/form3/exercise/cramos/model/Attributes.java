@@ -1,9 +1,12 @@
 package com.form3.exercise.cramos.model;
 
+import java.util.Currency;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -14,7 +17,8 @@ import com.form3.exercise.cramos.model.chargesinfo.ChargesInformation;
 import com.form3.exercise.cramos.model.party.Party;
 import com.form3.exercise.cramos.model.party.SponsorParty;
 
-public class PaymentAttributes {
+@Entity
+public class Attributes {
 
     @Id
     @JsonIgnore
@@ -25,23 +29,36 @@ public class PaymentAttributes {
     @MapsId
     private Payment payment;
 
-    private final String paymentId;
-    private final Double amount;
-    private final Party beneficiaryParty;
-    private final ChargesInformation chargesInformation;
-    private final Double currency;
-    private final Party debtorParty;
-    private final String endToEndReference;
-    private final FX fx;
-    private final String numericReference;
-    private final String paymentPurpose;
-    private final PaymentScheme paymentScheme;
-    private final PaymentType paymentType;
-    private final Date processingDate;
-    private final String reference;
-    private final SchemePaymentSubType schemePaymentSubType;
-    private final SchemePaymentType schemePaymentType;
-    private final SponsorParty sponsorParty;
+    private String paymentId;
+    private Double amount;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "attributes")
+    private Party beneficiaryParty;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "attributes")
+    private ChargesInformation chargesInformation;
+    private Currency currency;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "attributes")
+    private Party debtorParty;
+    private String endToEndReference;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "attributes")
+    private FX fx;
+    private String numericReference;
+    private String paymentPurpose;
+    private PaymentScheme paymentScheme;
+    private PaymentType paymentType;
+    private Date processingDate;
+    private String reference;
+    private SchemePaymentSubType schemePaymentSubType;
+    private SchemePaymentType schemePaymentType;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "attributes")
+    private SponsorParty sponsorParty;
+
+    public Attributes() {
+    }
 
     /**
      * Create Payment instance.
@@ -63,8 +80,8 @@ public class PaymentAttributes {
      * @param schemePaymentType
      * @param sponsorParty
      */
-    public PaymentAttributes(String paymentId, Double amount, Party beneficiaryParty,
-            ChargesInformation chargesInformation, Double currency, Party debtorParty, String endToEndReference, FX fx,
+    public Attributes(String paymentId, Double amount, Party beneficiaryParty,
+            ChargesInformation chargesInformation, Currency currency, Party debtorParty, String endToEndReference, FX fx,
             String numericReference, String paymentPurpose, PaymentScheme paymentScheme, PaymentType paymentType,
             Date processingDate, String reference, SchemePaymentSubType schemePaymentSubType,
             SchemePaymentType schemePaymentType, SponsorParty sponsorParty) {
@@ -88,6 +105,10 @@ public class PaymentAttributes {
     }
 
     // getters and setters//
+
+    public Payment getPayment() {
+        return payment;
+    }
 
     public void setPayment(Payment payment) {
         this.payment = payment;
@@ -113,7 +134,7 @@ public class PaymentAttributes {
         return chargesInformation;
     }
 
-    public Double getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
@@ -175,7 +196,7 @@ public class PaymentAttributes {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PaymentAttributes that = (PaymentAttributes) o;
+        Attributes that = (Attributes) o;
         return Objects.equals(id, that.id) && Objects.equals(paymentId, that.paymentId) && Objects
                 .equals(amount, that.amount) && Objects.equals(beneficiaryParty, that.beneficiaryParty) && Objects
                 .equals(chargesInformation, that.chargesInformation) && Objects.equals(currency, that.currency)

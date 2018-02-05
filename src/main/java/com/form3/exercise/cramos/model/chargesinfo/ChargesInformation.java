@@ -5,14 +5,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.form3.exercise.cramos.model.PaymentAttributes;
+import com.form3.exercise.cramos.model.Attributes;
 
+@Entity
 public class ChargesInformation {
 
     @Id
@@ -22,9 +26,11 @@ public class ChargesInformation {
     @JoinColumn(name = "id")
     @OneToOne
     @MapsId
-    private PaymentAttributes paymentAttributes;
+    private Attributes attributes;
 
     private final BearerCode bearerCode;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chargesInformation")
     private final List<SenderCharge> senderCharges;
     private final Double receiverChargesAmount;
     private final Currency receiverChargesCurrency;
@@ -46,16 +52,16 @@ public class ChargesInformation {
 
     // getters and setters//
 
-    public void setPaymentAttributes(PaymentAttributes paymentAttributes) {
-        this.paymentAttributes = paymentAttributes;
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 
     public UUID getId() {
         return id;
     }
 
-    public PaymentAttributes getPaymentAttributes() {
-        return paymentAttributes;
+    public Attributes getAttributes() {
+        return attributes;
     }
 
     public BearerCode getBearerCode() {
@@ -83,7 +89,7 @@ public class ChargesInformation {
             return false;
         }
         ChargesInformation that = (ChargesInformation) o;
-        return Objects.equals(id, that.id) && Objects.equals(paymentAttributes, that.paymentAttributes)
+        return Objects.equals(id, that.id)
                 && bearerCode == that.bearerCode && Objects
                 .equals(receiverChargesAmount, that.receiverChargesAmount) && Objects
                 .equals(receiverChargesCurrency, that.receiverChargesCurrency);
@@ -92,12 +98,12 @@ public class ChargesInformation {
     @Override
     public int hashCode() {
         return Objects
-                .hash(id, paymentAttributes, bearerCode, senderCharges, receiverChargesAmount, receiverChargesCurrency);
+                .hash(id, bearerCode, senderCharges, receiverChargesAmount, receiverChargesCurrency);
     }
 
     @Override
     public String toString() {
-        return "ChargesInformation{" + "id=" + id + ", paymentAttributes=" + paymentAttributes + ", bearerCode="
+        return "ChargesInformation{" + "id=" + id + ", bearerCode="
                 + bearerCode + ", senderCharges=" + Objects.toString(senderCharges) + ", receiverChargesAmount=" + receiverChargesAmount
                 + ", receiverChargesCurrency=" + receiverChargesCurrency + '}';
     }

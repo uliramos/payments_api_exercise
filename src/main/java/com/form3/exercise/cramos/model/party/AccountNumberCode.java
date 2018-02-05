@@ -1,7 +1,8 @@
 package com.form3.exercise.cramos.model.party;
 
 public enum AccountNumberCode {
-    BBAN("BBAN");
+    BBAN("BBAN"),
+    IBAN("IBAN");
 
     private String name;
 

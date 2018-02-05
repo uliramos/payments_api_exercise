@@ -1,4 +1,4 @@
-package com.form3.exercise.cramos.restapi;
+package com.form3.exercise.cramos;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

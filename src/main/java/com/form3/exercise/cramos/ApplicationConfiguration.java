@@ -1,9 +1,10 @@
-package com.form3.exercise.cramos.restapi;
+package com.form3.exercise.cramos;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -23,7 +24,7 @@ public class ApplicationConfiguration {
     public DataSource dataSource() {
 
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.HSQL).build();
+        return builder.setType(EmbeddedDatabaseType.H2).build();
     }
 
     @Bean

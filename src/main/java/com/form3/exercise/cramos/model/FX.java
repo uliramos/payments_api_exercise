@@ -2,29 +2,52 @@ package com.form3.exercise.cramos.model;
 
 import java.util.Currency;
 import java.util.Objects;
+import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class FX {
+
+    @Id
+    @JsonIgnore
+    private UUID id;
+
+    @JoinColumn(name = "id")
+    @OneToOne
+    @MapsId
+    private Attributes attributes;
 
     private final String contractReference;
     private final Double exchangeRate;
-    private final Double original_amount;
+    private final Double originalAmount;
     private final Currency currency;
 
     /**
      * Create an FX instance.
      * @param contractReference
      * @param exchangeRate
-     * @param original_amount
+     * @param originalAmount
      * @param currency
      */
-    public FX(String contractReference, Double exchangeRate, Double original_amount, Currency currency) {
+    public FX(String contractReference, Double exchangeRate, Double originalAmount, Currency currency) {
         this.contractReference = contractReference;
         this.exchangeRate = exchangeRate;
-        this.original_amount = original_amount;
+        this.originalAmount = originalAmount;
         this.currency = currency;
     }
 
-    // getter //
+    // getters and setters//
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
 
     public String getContractReference() {
         return contractReference;
@@ -34,8 +57,8 @@ public class FX {
         return exchangeRate;
     }
 
-    public Double getOriginal_amount() {
-        return original_amount;
+    public Double getOriginalAmount() {
+        return originalAmount;
     }
 
     public Currency getCurrency() {
@@ -54,17 +77,17 @@ public class FX {
         }
         FX fx = (FX) o;
         return Objects.equals(contractReference, fx.contractReference) && Objects.equals(exchangeRate, fx.exchangeRate)
-                && Objects.equals(original_amount, fx.original_amount) && Objects.equals(currency, fx.currency);
+                && Objects.equals(originalAmount, fx.originalAmount) && Objects.equals(currency, fx.currency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contractReference, exchangeRate, original_amount, currency);
+        return Objects.hash(contractReference, exchangeRate, originalAmount, currency);
     }
 
     @Override
     public String toString() {
         return "FX{" + "contractReference='" + contractReference + '\'' + ", exchangeRate=" + exchangeRate
-                + ", original_amount=" + original_amount + ", currency=" + currency + '}';
+                + ", originalAmount=" + originalAmount + ", currency=" + currency + '}';
     }
 }

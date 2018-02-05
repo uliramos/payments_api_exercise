@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -25,16 +23,12 @@ public class Payment implements Transaction {
                       strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @JoinColumn(name = "id")
-    @OneToOne
-    @MapsId
-    private Payment payment;
+    private TransactionType type = TransactionType.PAYMENT;
+    private Integer version;
+    private UUID organisationId;
 
-    private final TransactionType type = TransactionType.PAYMENT;
-    private final Integer version;
-    private final UUID organisationId;
-
-    private final PaymentAttributes attributes;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "payment")
+    private Attributes attributes;
 
     /**
      * Create a payment instance.
@@ -42,7 +36,7 @@ public class Payment implements Transaction {
      * @param organisationId
      * @param attributes
      */
-    public Payment(Integer version, UUID organisationId, PaymentAttributes attributes) {
+    public Payment(Integer version, UUID organisationId, Attributes attributes) {
         this.version = version;
         this.organisationId = organisationId;
         this.attributes = attributes;
@@ -55,6 +49,14 @@ public class Payment implements Transaction {
 
     // getter and setters ///
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Integer getVersion() {
         return version;
     }
@@ -62,8 +64,12 @@ public class Payment implements Transaction {
     public UUID getOrganisationId() {
         return organisationId;
     }
+
+    public void setOrganisationId(UUID organisationId) {
+        this.organisationId = organisationId;
+    }
     
-    public PaymentAttributes getAttributes() {
+    public Attributes getAttributes() {
         return attributes;
     }
 
@@ -87,4 +93,6 @@ public class Payment implements Transaction {
     public int hashCode() {
         return Objects.hash(id, type, version, organisationId, attributes.getId());
     }
+
+
 }

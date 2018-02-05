@@ -1,13 +1,36 @@
 package com.form3.exercise.cramos.model.party;
 
 import java.util.Objects;
+import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.form3.exercise.cramos.model.Attributes;
+
+@Entity
 public class Party {
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
+    @JsonIgnore
+    private UUID id;
+
+    @OneToOne
+    private Attributes attributes;
+
     private final String accountName;
     private final String accountNumber;
     private final AccountNumberCode accountNumberCode;
     private final Integer accountType;
-    private final String address; // for production use this would obviously be a separate object.
+    private final String address; // for production use this would probably be a separate object.
     private final String bankId;
     private final BankIdCode bankIdCode;
     private final String name;
@@ -35,7 +58,11 @@ public class Party {
         this.name = name;
     }
 
-    // getter //
+    // getters and setters//
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
 
     public String getAccountName() {
         return accountName;
@@ -80,23 +107,24 @@ public class Party {
             return false;
         }
         Party party = (Party) o;
-        return Objects.equals(accountName, party.accountName) && Objects.equals(accountNumber, party.accountNumber)
-                && Objects.equals(accountNumberCode, party.accountNumberCode) && Objects
-                .equals(accountType, party.accountType) && Objects.equals(address, party.address) && Objects
-                .equals(bankId, party.bankId) && Objects.equals(bankIdCode, party.bankIdCode) && Objects
-                .equals(name, party.name);
+        return Objects.equals(id, party.id) && Objects
+                .equals(accountName, party.accountName) && Objects.equals(accountNumber, party.accountNumber)
+                && accountNumberCode == party.accountNumberCode && Objects.equals(accountType, party.accountType)
+                && Objects.equals(address, party.address) && Objects.equals(bankId, party.bankId)
+                && bankIdCode == party.bankIdCode && Objects.equals(name, party.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects
-                .hash(accountName, accountNumber, accountNumberCode, accountType, address, bankId, bankIdCode, name);
+        return Objects.hash(id, accountName, accountNumber, accountNumberCode, accountType, address,
+                bankId, bankIdCode, name);
     }
 
     @Override
     public String toString() {
-        return "Party{" + "accountName='" + accountName + '\'' + ", accountNumber='" + accountNumber + '\''
-                + ", accountNumberCode=" + accountNumberCode + ", accountType=" + accountType + ", address='" + address
-                + '\'' + ", bankId='" + bankId + '\'' + ", bankIdCode=" + bankIdCode + ", name='" + name + '\'' + '}';
+        return "Party{" + "id=" + id + ", accountName='" + accountName
+                + '\'' + ", accountNumber='" + accountNumber + '\'' + ", accountNumberCode=" + accountNumberCode
+                + ", accountType=" + accountType + ", address='" + address + '\'' + ", bankId='" + bankId + '\''
+                + ", bankIdCode=" + bankIdCode + ", name='" + name + '\'' + '}';
     }
 }
