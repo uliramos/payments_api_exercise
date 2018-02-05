@@ -18,7 +18,7 @@ import com.form3.exercise.cramos.service.PaymentService;
 @RequestMapping("/payments")
 public class PaymentController {
 
-    private PaymentService paymentService;
+    private final PaymentService paymentService;
 
     @Autowired
     public PaymentController(PaymentService paymentService) {

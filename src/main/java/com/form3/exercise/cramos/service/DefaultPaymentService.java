@@ -32,7 +32,7 @@ public class DefaultPaymentService implements PaymentService {
     public Payment getOne(UUID id) {
         Payment payment = paymentRepository.findOne(id);
         if (payment == null) {
-            throw new RESTResourceNotFoundException("Payment not found. id: " + payment.getId());
+            throw new RESTResourceNotFoundException("Payment not found. id: " + id);
         }
         return unwiredJPAEntities(payment);
     }

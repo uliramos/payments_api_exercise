@@ -29,7 +29,7 @@ public class PaymentRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private PaymentRepository paymentRepository;
+    private PaymentRepository unitUnderTest;
 
     private int version = 1;
 
@@ -55,7 +55,7 @@ public class PaymentRepositoryTest {
         entityManager.flush();
 
         //when
-        List<Payment> payments = paymentRepository.findAll();
+        List<Payment> payments = unitUnderTest.findAll();
 
         //then
         assertThat(payments.get(0).getOrganisationId()).isEqualTo(organisationId);
@@ -104,7 +104,7 @@ public class PaymentRepositoryTest {
         entityManager.flush();
 
         //when
-        Payment paymentReturned = paymentRepository.findOne(payment.getId());
+        Payment paymentReturned = unitUnderTest.findOne(payment.getId());
 
         //then
         assertThat(paymentReturned).isEqualTo(payment);
@@ -122,7 +122,7 @@ public class PaymentRepositoryTest {
         attributes.setPayment(payment); // jpa db relational wiring
 
         //when
-        Payment paymentReturned = paymentRepository.save(payment);
+        Payment paymentReturned = unitUnderTest.save(payment);
 
         //then
         assertThat(paymentReturned).isEqualTo(payment);
@@ -142,13 +142,13 @@ public class PaymentRepositoryTest {
         entityManager.flush();
 
         //when
-        Payment paymentReturned = paymentRepository.findOne(payment.getId());
+        Payment paymentReturned = unitUnderTest.findOne(payment.getId());
         assertThat(paymentReturned).isEqualTo(payment);
 
         UUID newOrganisationId = UUID.randomUUID();
         paymentReturned.setOrganisationId(newOrganisationId);
 
-        Payment updatedPayment = paymentRepository.save(paymentReturned);
+        Payment updatedPayment = unitUnderTest.save(paymentReturned);
 
         //then
         assertThat(updatedPayment.getOrganisationId()).isEqualTo(newOrganisationId);
@@ -176,8 +176,8 @@ public class PaymentRepositoryTest {
         entityManager.flush();
 
         //when
-        paymentRepository.delete(payment.getId());
-        List<Payment> payments = paymentRepository.findAll();
+        unitUnderTest.delete(payment.getId());
+        List<Payment> payments = unitUnderTest.findAll();
 
         //then
         assertThat(payments.size()).isEqualTo(1);

@@ -3,9 +3,6 @@ spring:
   server:
     contextPath: /api
 
-  h2:
-    console.enabled=true
-    console.path=/h2
 
   jackson:
         property-naming-strategy: SNAKE_CASE
